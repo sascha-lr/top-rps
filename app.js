@@ -8,7 +8,7 @@ function capitalizeFirst(string) {
     return string.at(0).toUpperCase() + string.slice(1);
 }
 
-function getComputerChoice () {
+function getComputerChoice() {
     const randomNumber = getRandomInt();
     if (randomNumber === 0) {
         return "rock";
@@ -19,42 +19,50 @@ function getComputerChoice () {
     }
 }
 
-function getHumanChoice () {
-    const humanChoice = prompt("Type either Rock, Paper or Scissors","f.e.: Rock").toLowerCase();
-    if (!(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors")) {
-        alert("You have to type either Rock, Paper or Scissors and respect proper grammar! Trying again...");
-        return getHumanChoice();
-    } else {
-        return humanChoice;
+function getHumanChoice() {
+    let humanChoice;
+    while (true) {
+        humanChoice = prompt("Type either Rock, Paper or Scissors","Rock").toLowerCase();
+        if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
+            alert("You have to type either Rock, Paper or Scissors and respect proper grammar! Trying again...");
+        } else {
+            break;
+        }
     }
+    return humanChoice;
 }
 
-function playGame () {
+function playGame() {
 
     let humanScore = 0;
     let computerScore = 0;
     
-    function playRound (humanChoice, computerChoice) {
+    function playRound(humanChoice, computerChoice) {
         
-        humanChoice = capitalizeFirst(humanChoice);
-        computerChoice = capitalizeFirst(computerChoice);
+        humanChoice = capitalizeFirst(humanChoice); //why could this be a problem? hint: objects
+        computerChoice = capitalizeFirst(computerChoice); //why could this be a problem? hint: objects
 
         if (humanChoice === computerChoice) {
             alert(`Tie! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
         } else if (humanChoice === "Rock" && computerChoice === "Paper" || humanChoice === "Scissors" && computerChoice === "Rock" || humanChoice === "Paper" && computerChoice === "Scissors") {
-            computerScore += 1;
+            computerScore++;
             alert(`You lose! ${computerChoice} beats ${humanChoice}! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
         } else {
-            humanScore += 1;
+            humanScore++;
             alert(`You win! ${humanChoice} beats ${computerChoice}! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
         }
     }
-
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
+    while(!(humanScore >= 3 || computerScore >= 3)) {
+        const humanChoice = getHumanChoice(); //advantageous for debugging
+        const computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+    }
+    if (computerScore >= 3) {
+        alert("Unfortunately you lost!");
+    } else {
+        alert("Congratulations! You won!");
+    }
 }
 
-playButton.addEventListener('click', playGame);
+playButton.addEventListener("click", playGame);
+
