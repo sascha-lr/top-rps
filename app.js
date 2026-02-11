@@ -1,68 +1,58 @@
-const playButton = document.querySelector("#play");
+const playBtns = document.querySelectorAll(".play-buttons");
+const gameTxt = document.querySelector("#game-text");
+const closeBtn = document.querySelector(".close-button");
+const gameOverTxt = document.querySelector("#game-over-text");
+const gameOverScrn = document.querySelector("#game-over-screen");
 
-function getRandomInt() {
-  return Math.floor(Math.random() * 3);
-}
+let humanScore = 0;
+let computerScore = 0;
 
 function capitalizeFirst(string) {
     return string.at(0).toUpperCase() + string.slice(1);
 }
 
 function getComputerChoice() {
-    const randomNumber = getRandomInt();
-    if (randomNumber === 0) {
-        return "rock";
-    } else if (randomNumber === 1) {
-        return "paper";
-    } else {
-        return "scissors";
-    }
+    const rps = ["rock", "paper", "scissors"];
+    return rps[Math.floor(Math.random() * rps.length)];
 }
 
-function getHumanChoice() {
-    let humanChoice;
-    while (true) {
-        humanChoice = prompt("Type either Rock, Paper or Scissors","Rock").toLowerCase();
-        if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-            alert("You have to type either Rock, Paper or Scissors and respect proper grammar! Trying again...");
+function checkIfWon() {
+    if (computerScore === 3 || humanScore === 3) {
+        if(computerScore === 3) {
+            gameOverTxt.innerText = `Unfortunately you lost ${computerScore} to ${humanScore} against the computer!\n\nBetter luck next time!`
         } else {
-            break;
+            gameOverTxt.innerText = `Congratulations!\nYou won ${humanScore} to ${computerScore} against the computer!\n\nWhat an accomplishment!`
         }
+        gameOverScrn.style.display = "initial";
+        gameTxt.innerText = "Choose one of the options to start the game.";
+        humanScore = 0;
+        computerScore = 0;
     }
-    return humanChoice;
 }
 
-function playGame() {
+function playRound(e) {
 
-    let humanScore = 0;
-    let computerScore = 0;
+    const humanChoice = capitalizeFirst(e.currentTarget.id); //This could be a problem. Hint: Objects
+    const computerChoice = capitalizeFirst(getComputerChoice()); //This could be a problem. Hint: Objects
     
-    function playRound(humanChoice, computerChoice) {
-        
-        humanChoice = capitalizeFirst(humanChoice); //why could this be a problem? hint: objects
-        computerChoice = capitalizeFirst(computerChoice); //why could this be a problem? hint: objects
-
-        if (humanChoice === computerChoice) {
-            alert(`Tie! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
-        } else if (humanChoice === "Rock" && computerChoice === "Paper" || humanChoice === "Scissors" && computerChoice === "Rock" || humanChoice === "Paper" && computerChoice === "Scissors") {
-            computerScore++;
-            alert(`You lose! ${computerChoice} beats ${humanChoice}! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
-        } else {
-            humanScore++;
-            alert(`You win! ${humanChoice} beats ${computerChoice}! Current Human Score: ${humanScore}. Current Computer Score: ${computerScore}`);
-        }
-    }
-    while(!(humanScore >= 3 || computerScore >= 3)) {
-        const humanChoice = getHumanChoice(); //advantageous for debugging
-        const computerChoice = getComputerChoice();
-        playRound(humanChoice, computerChoice);
-    }
-    if (computerScore >= 3) {
-        alert("Unfortunately you lost!");
+    if (humanChoice === computerChoice) {
+        gameTxt.innerText = `Tie!\n\nCurrent Human Score: ${humanScore}\nCurrent Computer Score: ${computerScore}\n\nNow, pick again!`;
+    } else if (humanChoice === "Rock" && computerChoice === "Paper" || humanChoice === "Scissors" && computerChoice === "Rock" || humanChoice === "Paper" && computerChoice === "Scissors") {
+        computerScore++;
+        gameTxt.innerText = `You lose! ${computerChoice} beats ${humanChoice}!\n\nCurrent Human Score: ${humanScore}\nCurrent Computer Score: ${computerScore}\n\nNow, pick again!`;
+        checkIfWon();
     } else {
-        alert("Congratulations! You won!");
+        humanScore++;
+        gameTxt.innerText = `You win! ${humanChoice} beats ${computerChoice}!\n\nCurrent Human Score: ${humanScore}\nCurrent Computer Score: ${computerScore}\n\nNow, pick again!`;
+        checkIfWon();
     }
 }
 
-playButton.addEventListener("click", playGame);
+playBtns.forEach((button) => {
+  button.addEventListener("click", playRound);
+});
 
+
+closeBtn.addEventListener("click", () => {
+gameOverScrn.style.display = "none";
+})

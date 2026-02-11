@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size: 20px">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>The Odin Project | RPS Solution</title>
-    <style>
-        body {
-            display: grid;
-            height: 100vh;
-            place-content: center;
-        }
-    </style>
+
+    <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<button id="play">Play 5 rounds of RPS!</button>
-<script src="app.js"></script>
+    <div id="game-over-screen">
+        <button class="close-button">x</button>
+        <p id="game-over-text"></p>
+    </div>
+
+    <div class="game-container">
+        <div class="bar"></div>
+        <div class="content-box">
+           <span>
+                <h1>Do you want to play a game of...<br>
+                    <span class="game-title">Rock, Paper, Scissors!</span>
+                </h1>
+            </span>
+            <div class="button-container">
+                <button class="play-buttons" id="rock">Rock</button>
+                <button class="play-buttons" id="paper">Paper</button>
+                <button class="play-buttons" id="scissors">Scissors</button>
+            </div>
+            <p id="game-text">Choose one of the options to start the game.</p>
+        </div> 
+        </div>
 </body>
 </html>

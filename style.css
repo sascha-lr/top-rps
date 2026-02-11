@@ -1,0 +1,181 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*text
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+/* CSS Reset complete */
+
+:root {
+    --white: #fff;
+    --black: #000;
+    --yellow: hsl(47, 88%, 63%);
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+body {
+    display: grid;
+    background-color: #000;
+    height: 100vh;
+    place-content: center;
+    font-family: "Inter";
+    color: var(--white);
+}
+
+h1 {
+    font-size: 1.5rem;
+    animation: fade-in-right ease 0.4s forwards;
+}
+
+.game-title {
+    font-size: 2rem;
+}
+
+.game-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    place-content: center;
+    anchor-name: --game-container;
+}
+
+.content-box {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    z-index: 0;
+    animation: fade-in-right ease 0.4s forwards;
+    animation-delay: .2s;
+}
+
+button {
+    border-radius: 100vw;
+    padding: .25rem .75rem;
+    cursor: pointer;
+    color: var(--white) ;
+    border: solid 2px var(--white);
+    background-color: var(--black);
+}
+
+.play-buttons:hover {
+  transform: scale(1.05);
+  transition: all 0.5s ease;
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.bar {
+    width: .5rem;
+    height: 100%;
+    background-color: var(--yellow);
+}
+
+#game-over-screen {
+    position: absolute;
+    display: none;
+    position-anchor: --game-container;
+    width: anchor-size(width);
+    max-width: 92.5vw;
+    height: anchor-size(height);
+    place-content: center;
+    border: solid var(--yellow);
+    background-color: var(--black);
+    padding: 1rem;
+    border-radius: 1rem;
+    align-self: center;
+    place-self: center;
+    text-align: center;
+    z-index: 1;
+    animation: fade-in-right ease 0.4s forwards;
+}
+
+.close-button {
+    color: hsl(0, 0%, 0%, 0%);
+    font-weight: 700;
+    border: solid var(--yellow);
+    text-shadow: 0 -.1rem var(--yellow);
+    width: 2.25rem;
+    height: 2.25rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: .5rem;
+}
+
+.close-button:hover {
+  transform: scale(1.05);
+  transition: all 0.5s ease;
+  background-color: var(--yellow);
+  text-shadow: 0 -.1rem var(--black);
+  border: solid var(--black);
+}
+
+#game-text {
+  animation: fade-in-right ease 0.4s forwards;
+  animation-delay: .4s;
+}
